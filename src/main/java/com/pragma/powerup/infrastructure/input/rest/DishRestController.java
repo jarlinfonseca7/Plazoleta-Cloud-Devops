@@ -96,7 +96,7 @@ public class DishRestController {
             @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
     })
     @GetMapping("/restaurant/{idRestaurante}/page/{page}/size/{size}")
-    @PreAuthorize("hasAuthority('CLIENTE')")
+   // @PreAuthorize("hasAuthority('CLIENTE')")
     public ResponseEntity<List<DishResponseDto>> getAllDishesByRestaurant(@PathVariable(value = "idRestaurante" ) Long idRestaurante,@PathVariable(value = "page" )Integer page, @PathVariable(value = "size") Integer size) {
         return ResponseEntity.ok(dishHandler.findAllByRestauranteId(idRestaurante, page,size));
     }

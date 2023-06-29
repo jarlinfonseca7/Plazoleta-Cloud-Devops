@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  plazoleta:
+    image: public.ecr.aws/z6g9i1e0/plazoleta:latest  #plazoleta
+    container_name: plazoleta-container
+    expose:
+      - 8082
+    ports:
+      - 8082:8082
+    environment:
+      BD_URL: ${BD_URL}
+      BD_USERNAME: ${BD_USERNAME}
+      BD_PASSWORD: ${BD_PASSWORD}
+      server.port: 8082

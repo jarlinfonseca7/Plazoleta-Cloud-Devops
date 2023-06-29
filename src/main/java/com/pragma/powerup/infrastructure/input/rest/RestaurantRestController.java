@@ -53,7 +53,7 @@ public class RestaurantRestController {
             @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
     })
     @GetMapping("/")
-    @PreAuthorize("hasAnyAuthority('PROPIETARIO', 'ADMIN')")
+    //@PreAuthorize("hasAnyAuthority('PROPIETARIO', 'ADMIN')")
     //@PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<RestaurantResponseDto>> getAllRestaurants() {
         return ResponseEntity.ok(restaurantHandler.getAllRestaurants());
@@ -68,7 +68,7 @@ public class RestaurantRestController {
     })
     @GetMapping("/page/{page}/size/{size}")
    // @PreAuthorize("hasAnyAuthority('PROPIETARIO', 'ADMIN')")
-    @PreAuthorize("hasAuthority('CLIENTE')")
+   // @PreAuthorize("hasAuthority('CLIENTE')")
     public ResponseEntity<List<RestaurantPaginationResponseDto>> getAllRestaurantsPagination(@PathVariable(value = "page" )Integer page, @PathVariable(value = "size") Integer size) {
         return ResponseEntity.ok(restaurantHandler.getRestaurantsWithPagination(page,size));
     }

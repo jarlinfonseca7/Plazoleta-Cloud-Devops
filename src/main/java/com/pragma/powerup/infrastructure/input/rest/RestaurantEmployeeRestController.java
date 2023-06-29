@@ -49,7 +49,7 @@ public class RestaurantEmployeeRestController {
             @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
     })
     @GetMapping("/")
-    @PreAuthorize("hasAuthority('PROPIETARIO')")
+    //@PreAuthorize("hasAuthority('PROPIETARIO')")
     public ResponseEntity<List<RestaurantEmployeeResponseDto>> getAllRestaurantEmployees() {
         return ResponseEntity.ok(restaurantEmployeeHandler.getAllRestaurantEmployees());
     }
