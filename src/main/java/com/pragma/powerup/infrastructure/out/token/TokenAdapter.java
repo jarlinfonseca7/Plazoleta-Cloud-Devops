@@ -5,10 +5,20 @@ import com.pragma.powerup.infrastructure.security.TokenUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+
 public class TokenAdapter implements IToken {
     @Override
     public String getBearerToken() {
-        return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization");
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        if (requestAttributes != null) {
+            HttpServletRequest request = requestAttributes.getRequest();
+            if (request != null) {
+                return request.getHeader("Authorization");
+            }
+        }
+        return null;
+        
     }
 
     @Override
