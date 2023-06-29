@@ -3,7 +3,29 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.13.RELEASE'
 	id 'java'
 	id 'jacoco'
+	id "org.sonarqube" version "4.2.1.3168"
 }
+
+sonarqube {
+	properties {
+		property "sonar.projectKey", "jarlinfonseca7_Plazoleta-Cloud-Devops"
+		property "sonar.organization", "jarlinfonseca7"
+		property "sonar.host.url", "https://sonarcloud.io"
+	}
+}
+
+jacocoTestReport {
+	reports {
+		xml.enabled true
+	}
+	dependsOn test
+}
+test.finalizedBy jacocoTestReport
+
+tasks.named('sonar').configure {
+	dependsOn jacocoTestReport
+}
+
 
 group = 'com.pragma.powerup'
 version = '0.0.1-SNAPSHOT'
