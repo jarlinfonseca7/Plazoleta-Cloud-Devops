@@ -49,3 +49,47 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: ./gradlew build sonarqube --info
+
+
+  deploy-ecr:
+
+    name: Build Image
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: 11
+          distribution: 'zulu' # Alternative distribution options are available
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+      - name: Validate Gradle wrapper
+        uses: gradle/wrapper-validation-action@ccb4328a959376b642e027874838f60f8e596de3
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@749f47bda3e44aa060e82d7b3ef7e40d953bd629
+        with:
+          arguments: build
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Package
+          path: build/libs
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.ACCESS_KEY_AWS }}
+          aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY_AWS }}
+          aws-region: ${{ secrets.REGION_AWS }}
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Build, tag, and push image to Amazon ECR
+        run: |
+          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.ECR_PATH_AWS }}
+          docker build -t ${{ secrets.ECR_REGISTRY_AWS }} .
+          docker tag ${{ secrets.ECR_REGISTRY_AWS }}:latest ${{ secrets.ECR_REPOSITORY_AWS }}:latest
+          docker push ${{ secrets.ECR_REPOSITORY_AWS }}:latest
