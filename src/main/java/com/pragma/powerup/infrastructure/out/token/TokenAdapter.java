@@ -18,7 +18,6 @@ public class TokenAdapter implements IToken {
             }
         }
         return null;
-        
     }
 
     @Override

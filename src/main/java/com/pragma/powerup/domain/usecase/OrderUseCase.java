@@ -94,7 +94,7 @@ public class OrderUseCase implements IOrderServicePort {
         for (int i=0; i<orderDishes.size();i++) {
             DishModel dishModel = dishPersistencePort.getDishById(orderDishes.get(i).getIdPlatos());
             if (dishModel == null) throw new DishNotExistException();
-            if (dishModel.getRestauranteId().getId() != orderModel2.getRestaurante().getId()) throw new DishRestaurantIdNotIsEqualsOrderException();
+            if (!dishModel.getRestauranteId().getId().equals(orderModel2.getRestaurante().getId())) throw new DishRestaurantIdNotIsEqualsOrderException();
             if(!dishModel.getActivo()) throw new DishIsInactiveException();
         }
         OrderModel order =orderPersistencePort.saveOrder(orderModel2);
@@ -165,7 +165,7 @@ public class OrderUseCase implements IOrderServicePort {
         Long idRestaurantEmployeeAuth = Long.valueOf(restaurantEmployeeModel.getRestaurantId());
         Long idRestaurantOrder = orderModel.getRestaurante().getId();
 
-        if(idRestaurantEmployeeAuth!=idRestaurantOrder) throw new OrderRestaurantMustBeEqualsEmployeeRestaurantException();
+        if(!idRestaurantEmployeeAuth.equals(idRestaurantOrder)) throw new OrderRestaurantMustBeEqualsEmployeeRestaurantException();
 
         orderModel.setChef(restaurantEmployeeModel);
         orderModel.setEstado(estado);
@@ -187,7 +187,7 @@ public class OrderUseCase implements IOrderServicePort {
         Long idRestaurantEmployeeAuth = Long.valueOf(restaurantEmployeeModel.getRestaurantId());
         Long idRestaurantOrder = orderModel.getRestaurante().getId();
 
-        if(idRestaurantEmployeeAuth!=idRestaurantOrder) throw new OrderRestaurantMustBeEqualsEmployeeRestaurantException();
+        if(!idRestaurantEmployeeAuth.equals(idRestaurantOrder)) throw new OrderRestaurantMustBeEqualsEmployeeRestaurantException();
 
         orderModel.setEstado("LISTO");
         orderPersistencePort.saveOrder(orderModel);
@@ -220,12 +220,12 @@ public class OrderUseCase implements IOrderServicePort {
         Long idRestaurantEmployeeAuth = Long.valueOf(restaurantEmployeeModel.getRestaurantId());
         Long idRestaurantOrder = orderModel.getRestaurante().getId();
 
-        if(idRestaurantEmployeeAuth!=idRestaurantOrder) throw new OrderRestaurantMustBeEqualsEmployeeRestaurantException();
+        if(!idRestaurantEmployeeAuth.equals(idRestaurantOrder)) throw new OrderRestaurantMustBeEqualsEmployeeRestaurantException();
 
         UserModel userModel = userFeignClientPort.getUserById(orderModel.getIdCliente());
        String pin2 = validatePin(userModel);
 
-        if(!(validatePin(userModel)).equals(pin) && !pin.equals(0)) throw new PinNotIsEqualsException();
+        if(!(validatePin(userModel)).equals(pin) && !pin.equals("0")) throw new PinNotIsEqualsException();
 
 
         orderModel.setEstado("ENTREGADO");
@@ -242,7 +242,7 @@ public class OrderUseCase implements IOrderServicePort {
         if(orderModel==null) throw new OrderNotExistException();
         Long idClientOrder = orderModel.getIdCliente();
 
-        if(idClientAuth!=idClientOrder) throw new ClientAuthMustBeEqualsClientOrderException();
+        if(!idClientAuth.equals(idClientOrder)) throw new ClientAuthMustBeEqualsClientOrderException();
         if(orderPersistencePort.existsByIdAndEstado(idOrder, "EN_PREPARACION")|| orderPersistencePort.existsByIdAndEstado(idOrder, "LISTO") ){
             SmsMessageModel smsMessageModel= new SmsMessageModel("+573238123367","Lo sentimos, tu pedido ya está en preparación y no puede cancelarse.");
             twilioFeignClientPort.sendSmsMessage(smsMessageModel);

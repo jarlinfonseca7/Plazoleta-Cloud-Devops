@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Component
 public class SecurityFeignRequestInterceptor implements RequestInterceptor {
 
@@ -16,7 +18,14 @@ public class SecurityFeignRequestInterceptor implements RequestInterceptor {
     }
 
     public static String getBearerTokenHeader(){
-        System.out.println(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization"));
-        return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization");
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        if (requestAttributes != null) {
+            HttpServletRequest request = requestAttributes.getRequest();
+            if (request != null) {
+                System.out.println(request.getHeader("Authorization"));
+                return request.getHeader("Authorization");
+            }
+        }
+        return null;
     }
 }

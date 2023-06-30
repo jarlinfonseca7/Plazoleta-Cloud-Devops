@@ -33,7 +33,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
                correo= TokenUtils.getCorreo(bearerToken.replace("Bearer ",""));
             }
 
-            if(correo!="" && correo!=null && SecurityContextHolder.getContext().getAuthentication() == null){
+            if(!"".equals(correo) && correo!=null && SecurityContextHolder.getContext().getAuthentication() == null){
                 UserDetails userDetails = userDetailsService.loadUserByUsername(correo);
                 if(correo.equals(userDetails.getUsername())){
                     UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(

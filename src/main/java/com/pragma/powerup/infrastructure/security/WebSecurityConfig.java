@@ -22,8 +22,7 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws  Exception{
-        return  http
-                .csrf().disable()
+        return  http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/swagger-ui/**", "/swagger-resources/**","/v3/api-docs/**", "/v2/api-docs/**", "/api/v1/restaurant/",
                         "/api/v1/category/", "/api/v1/category/{id}", "/api/v1/dish/restaurant/{idRestaurante}/page/{page}/size/{size}",
