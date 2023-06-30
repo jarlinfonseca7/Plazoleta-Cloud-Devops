@@ -7,7 +7,7 @@ on:
     types: [opened, synchronize, reopened]
 jobs:
   post-to-google-chat:
-    needs: [ build, deploy-ecr ]
+    needs: [ build, deploy-ecr, deploy-eb ]
     if: always()
     runs-on: ubuntu-latest
     steps:
@@ -93,3 +93,23 @@ jobs:
           docker build -t ${{ secrets.ECR_REGISTRY_AWS }} .
           docker tag ${{ secrets.ECR_REGISTRY_AWS }}:latest ${{ secrets.ECR_REPOSITORY_AWS }}:latest
           docker push ${{ secrets.ECR_REPOSITORY_AWS }}:latest
+
+
+  deploy-eb:
+    needs: deploy-ecr
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: Generate deployment package
+        run: zip deploy.zip docker-compose.yml
+      - name: Deploy to AWS Elastic BeansTalk
+        uses: einaregilsson/beanstalk-deploy@v20
+        with:
+          aws_access_key: ${{ secrets.ACCESS_KEY_AWS }}
+          aws_secret_key: ${{ secrets.SECRET_ACCESS_KEY_AWS }}
+          application_name: plazoleta
+          environment_name: Plazoleta-env
+          version_label: v2.2
+          region: ${{ secrets.REGION_AWS }}
+          deployment_package: deploy.zip
