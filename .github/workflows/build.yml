@@ -102,7 +102,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
       - name: Generate deployment package
-        run: zip deploy.zip docker-compose.yml
+        run: zip deploy.zip Dockerrun.aws.json
       - name: Deploy to AWS Elastic BeansTalk
         uses: einaregilsson/beanstalk-deploy@v20
         with:
@@ -110,6 +110,6 @@ jobs:
           aws_secret_key: ${{ secrets.SECRET_ACCESS_KEY_AWS }}
           application_name: plazoleta
           environment_name: Plazoleta-env
-          version_label: v2.2
+          version_label: v2.5
           region: ${{ secrets.REGION_AWS }}
           deployment_package: deploy.zip
