@@ -109,7 +109,7 @@ jobs:
           aws_access_key: ${{ secrets.ACCESS_KEY_AWS }}
           aws_secret_key: ${{ secrets.SECRET_ACCESS_KEY_AWS }}
           application_name: plazoleta
-          environment_name: Plazoleta-env
-          version_label: v2.5
+          environment_name: Plazoleta-env-10
+          version_label: v10.1
           region: ${{ secrets.REGION_AWS }}
           deployment_package: deploy.zip
