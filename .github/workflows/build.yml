@@ -52,13 +52,10 @@ jobs:
 
 
   deploy-ecr:
-
-    name: Build Image
+    name: Build Image and deploy-ecr
     needs: build
     runs-on: ubuntu-latest
-
     steps:
-
       - name: Check out code
         uses: actions/checkout@v3
       - name: Set up JDK 11
@@ -110,6 +107,6 @@ jobs:
           aws_secret_key: ${{ secrets.SECRET_ACCESS_KEY_AWS }}
           application_name: plazoleta
           environment_name: Plazoleta-env-10
-          version_label: v10.1
+          version_label: v10.2
           region: ${{ secrets.REGION_AWS }}
           deployment_package: deploy.zip
