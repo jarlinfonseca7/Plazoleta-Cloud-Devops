@@ -1,5 +1,6 @@
 package com.pragma.powerup.infrastructure.input.rest;
 
+import com.amazonaws.xray.spring.aop.XRayEnabled;
 import com.pragma.powerup.application.dto.request.RestaurantRequestDto;
 import com.pragma.powerup.application.dto.response.RestaurantPaginationResponseDto;
 import com.pragma.powerup.application.dto.response.RestaurantResponseDto;
@@ -28,6 +29,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/restaurant")
+@XRayEnabled
 @RequiredArgsConstructor
 public class RestaurantRestController {
 

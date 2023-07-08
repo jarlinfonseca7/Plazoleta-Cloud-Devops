@@ -1,5 +1,6 @@
 package com.pragma.powerup.infrastructure.input.rest;
 
+import com.amazonaws.xray.spring.aop.XRayEnabled;
 import com.pragma.powerup.application.dto.request.DishRequestDto;
 import com.pragma.powerup.application.dto.request.DishUpdateRequestDto;
 import com.pragma.powerup.application.dto.response.DishResponseDto;
@@ -28,6 +29,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/dish")
+@XRayEnabled
 @RequiredArgsConstructor
 public class DishRestController {
 

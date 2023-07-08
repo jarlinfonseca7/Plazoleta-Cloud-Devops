@@ -1,5 +1,6 @@
 package com.pragma.powerup.infrastructure.input.rest;
 
+import com.amazonaws.xray.spring.aop.XRayEnabled;
 import com.pragma.powerup.application.dto.request.CategoryRequestDto;
 import com.pragma.powerup.application.dto.response.CategoryResponseDto;
 import com.pragma.powerup.application.handler.ICategoryHandler;
@@ -26,6 +27,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/category")
+@XRayEnabled
 @RequiredArgsConstructor
 public class CategoryRestController {
 

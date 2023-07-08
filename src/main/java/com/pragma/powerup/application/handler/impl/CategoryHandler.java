@@ -1,5 +1,6 @@
 package com.pragma.powerup.application.handler.impl;
 
+import com.amazonaws.xray.spring.aop.XRayEnabled;
 import com.pragma.powerup.application.dto.request.CategoryRequestDto;
 import com.pragma.powerup.application.dto.response.CategoryResponseDto;
 import com.pragma.powerup.application.handler.ICategoryHandler;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@XRayEnabled
 @Transactional
 public class CategoryHandler implements ICategoryHandler {
 

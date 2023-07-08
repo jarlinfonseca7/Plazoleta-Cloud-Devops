@@ -1,5 +1,6 @@
 package com.pragma.powerup.application.handler.impl;
 
+import com.amazonaws.xray.spring.aop.XRayEnabled;
 import com.pragma.powerup.application.dto.request.RestaurantRequestDto;
 import com.pragma.powerup.application.dto.response.RestaurantPaginationResponseDto;
 import com.pragma.powerup.application.dto.response.RestaurantResponseDto;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@XRayEnabled
 @Transactional
 public class RestaurantHandler implements IRestaurantHandler {
 

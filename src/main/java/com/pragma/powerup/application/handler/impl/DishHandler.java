@@ -1,5 +1,6 @@
 package com.pragma.powerup.application.handler.impl;
 
+import com.amazonaws.xray.spring.aop.XRayEnabled;
 import com.pragma.powerup.application.dto.request.DishRequestDto;
 import com.pragma.powerup.application.dto.request.DishUpdateRequestDto;
 import com.pragma.powerup.application.dto.response.DishResponseDto;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@XRayEnabled
 @Transactional
 public class DishHandler implements IDishHandler {
 
