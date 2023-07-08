@@ -9,6 +9,6 @@ import javax.servlet.Filter;
 public class WebConfig {
     @Bean
     public Filter TracingFilter() {
-        return new AWSXRayServletFilter("Scorekeep");
+        return new AWSXRayServletFilter("plazoleta-service");
     }
 }
